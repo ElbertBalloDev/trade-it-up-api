@@ -1,0 +1,8 @@
+{
+  "body": "{\"description\":\"Willing to let go my PS4 for a Nintendo Switch\",\"attachment\":\"Sony_PS4.jpg\"}",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}
