@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 const theme = {
   colors: {
@@ -13,7 +12,6 @@ const theme = {
   fontSizes: {
     small: '1em',
     medium: '2em',
-
     large: '3em'
   }
 };
