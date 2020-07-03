@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Viewport, Theme, Row, RowItem } from './components/UI';
 import Navbar from './components/Navbar';
 
-import './App.css';
-
 function App() {
   return (
     <Theme>
@@ -27,6 +25,7 @@ function App() {
                     <RowItem>Item 7</RowItem>
                     <RowItem>Item 8</RowItem>
                     <RowItem>Item 9</RowItem>
+										<RowItem>Item 10</RowItem>
                   </Row>
                 </>
               )}
