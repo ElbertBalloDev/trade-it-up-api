@@ -19,5 +19,6 @@ export const main = handler(async (event, context) => {
 
   await dynamoDb.update(params);
 
+  
   return { status: true };
 });
