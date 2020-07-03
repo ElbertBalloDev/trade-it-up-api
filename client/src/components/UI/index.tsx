@@ -25,21 +25,23 @@ export const Viewport = styled.div`
   width: auto;
   height: auto;
   margin: 0 auto;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 0.25rem;
 `;
 
 export const Row = styled.div`
   display: flex;
   flex-director: row;
-	flex-wrap: wrap;
+  flex-wrap: wrap;
 `;
 
 export const RowItem = styled.div`
-	flex: 1 1 30%;
-	padding: 10px;
-	height: 200px;
-	border: 1px solid black;
-	margin: 10px;
-`
+  flex: 1 1 30%;
+  padding: 10px;
+  height: 200px;
+  border: 1px solid black;
+  margin: 10px;
+`;
 
 export const Column = styled.div`
   display: flex;
