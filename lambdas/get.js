@@ -1,22 +1,17 @@
-import * as uuid from "uuid";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 
 export const main = handler(async (event, context) => {
-  const data = JSON.parse(event.body);
-
 	const params = {
 		TableName: process.env.tableName,
-		Item: {
+		Key: {
 			userId: event.requestContext.identity.cognitoIdentityId,
-			productId: uuid.v1(),
-			description: data.description,
-			attachment: data.attachment,
-			createdAt: Date.now(),
+			productId: event.pathParameters.id,
 		},
 	};
-
-  await dynamoDb.put(params);
-
-  return params.Item;
+	const result = await dynamoDb.get(params);
+	if (!result.Item) {
+		throw new Error("Item not found.");
+	}
+	return result.Item;
 });
