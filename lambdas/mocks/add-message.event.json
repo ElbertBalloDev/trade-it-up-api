@@ -1,0 +1,8 @@
+{
+	"body": "{\"content\":\"yeet\",\"messagedUser\":\"485845\",\"productId\":\"1489\"}",
+	"requestContext": {
+		"identity": {
+			"cognitoIdentityId": "USER-SUB-1234"
+		}
+	}
+}

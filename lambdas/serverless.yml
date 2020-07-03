@@ -17,19 +17,20 @@ provider:
   region: us-east-1
 
   environment:
-   tableName: products
-  
-   iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:DescribeTable
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+    productsTable: products
+    messageTable: messages
+
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:DescribeTable
+          - dynamodb:Query
+          - dynamodb:Scan
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+        Resource: "arn:aws:dynamodb:us-east-1:*:*"
       
 functions:
   create:
@@ -37,6 +38,14 @@ functions:
     events:
       - http:
           path: products
+          method: post
+          cors: true
+          authorizer: aws_iam
+  addMessage:
+    handler: ./messages/create.main
+    events:
+      - http:
+          path: messages
           method: post
           cors: true
           authorizer: aws_iam
