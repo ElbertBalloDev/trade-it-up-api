@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import './Login.css';
+import React, { useState } from 'react'
+//import './Login.css';
 import { Auth } from 'aws-amplify';
+
+import { Input, FormButton, FormDiv } from '../UI';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +12,6 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
     try {
       await Auth.signIn(email, password);
       alert('Logged in');
@@ -20,28 +21,28 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className='form-style-6'>
+    <FormDiv>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          name='field1'
-          type='email'
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+        <Input onChange={e => setEmail(e.target.value)}
           placeholder='Your Email'
-        />
-        <input
+          value={email} 
+          name='email' />
+        <Input
           type='password'
-          name='field2'
-          value={[password]}
+          name='password'
+          value={password}
           onChange={e => setPassword(e.target.value)}
           placeholder='Password'
         />
-        <button disabled={!validateForm()} type='submit'>
-          Login
-        </button>
+        <FormButton 
+          disabled={!validateForm()} 
+          color="#2196f3" 
+          uppercase type='submit'>
+            Login
+        </FormButton>
       </form>
-    </div>
+    </FormDiv>
   );
 };
 

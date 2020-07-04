@@ -84,7 +84,37 @@ export const Column = styled.div`
   flex-wrap: wrap;
 `;
 
-export const Input = styled.input``;
+export const FormDiv = styled.div`
+  font: 95% Arial, Helvetica, sans-serif;
+  max-width: 400px;
+  margin: 5% auto;
+  padding: 40px;
+  border: 1px solid black;
+`;
+
+export const Input = styled.input`
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline: none;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  background: #fff;
+  margin-bottom: 4%;
+  border: 1px solid #ccc;
+  padding: 3%;
+  color: #555;
+  font: 95% Arial, Helvetica, sans-serif;
+
+&:focus {
+  box-shadow: 0 0 5px #2196f3;
+  padding: 3%;
+  border: 1px solid #2196f3;
+}
+`;
 
 export const Button = styled.button<IButtonProps>`
   position: relative;
@@ -104,10 +134,29 @@ export const Button = styled.button<IButtonProps>`
   text-transform: ${(props: IButtonProps) =>
     props.uppercase ? 'uppercase' : 'none'};
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: #27ae60;
+    cursor:pointer;
   }
+
+  &:disabled {
+    background-color: #9ccdf5;
+    cursor: not-allowed;
+  }
+`;
+
+export const FormButton = styled(Button)`
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  padding: 3%;
+  background: #2196f3;
+  /* border-bottom: 2px solid #2196f3; */
+  border-top-style: none;
+  border-right-style: none;
+  border-left-style: none;	
+  color: #fff;
 `;
 
 export const Theme: React.FC<IProps> = ({ children }) => (
