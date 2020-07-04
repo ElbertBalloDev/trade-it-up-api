@@ -42,3 +42,5 @@ function App() {
     </Theme>
   );
 }
+
+export default App;
