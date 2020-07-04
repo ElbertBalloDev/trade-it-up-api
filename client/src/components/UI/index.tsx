@@ -25,14 +25,6 @@ interface IButtonProps {
   uppercase?: boolean;
 }
 
-export const SlideUp = styled.div`
-  top: 100%;
-  position: relative;
-  transition: all 0.3s ease-out;
-  background: #428bca;
-	height: 100%;
-`;
-
 export const Viewport = styled.div`
   max-width: 1300px;
   width: auto;
@@ -50,18 +42,32 @@ export const Row = styled.div`
   padding: 15px;
 `;
 
+export const SlideUp = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: all 0.5s;
+  overflow: hidden;
+  height: 0;
+  background: transparent;
+  text-align: center;
+  font-size: 50px;
+`;
+
 export const RowItem = styled.div`
   flex: 0 1 25%;
-  padding: 10px;
   border: 1px solid black;
   margin: 10px;
-	cursor: pointer;
-	height: 300px;
+  cursor: pointer;
+  height: 300px;
   overflow: hidden;
+  position: relative; 
+  cursor: pointer;
 
   &:hover {
     ${SlideUp} {
-      top: 0;
+      height: 100%;
     }
   }
 
