@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Viewport, Theme, Row, RowItem } from './components/UI';
 import Navbar from './components/Navbar';
+import Login from "./containers/Login";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                 </>
               )}
             />
+            <Route exact path="/login"><Login /></Route>
           </Switch>
         </Router>
       </Viewport>

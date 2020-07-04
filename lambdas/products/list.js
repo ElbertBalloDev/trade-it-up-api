@@ -1,9 +1,9 @@
-import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
+import handler from "../libs/handler-lib";
+import dynamoDb from "../libs/dynamodb-lib";
 
 export const main = handler(async (event, context) => {
 	const params = {
-		TableName: process.env.tableName,
+		TableName: process.env.productsTable,
     KeyConditionExpression: "userId = :userId",
     ExpressionAttributeValues: {
       ":userId": event.requestContext.identity.cognitoIdentityId
