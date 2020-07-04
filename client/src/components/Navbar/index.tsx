@@ -27,7 +27,6 @@ const AppTitle = styled(Link)`
 
 const MenuContainer = styled.ul`
 	display: inline-flex;
-
 `;
 
 const MenuItem = styled.li`
