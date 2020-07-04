@@ -23,11 +23,12 @@ interface IProps {
 interface IButtonProps {
   color?: string;
   uppercase?: boolean;
+  fullWidth?: boolean;
 }
 
 export const Viewport = styled.div`
-	max-width: 1300px;
-	min-height: 800px;
+  max-width: 1300px;
+  min-height: 800px;
   width: auto;
   height: auto;
   margin: 0 auto;
@@ -84,30 +85,17 @@ export const Column = styled.div`
   flex-wrap: wrap;
 `;
 
-export const FormDiv = styled.div`
-  font: 95% Arial, Helvetica, sans-serif;
-  max-width: 400px;
-  margin: 5% auto;
-  padding: 40px;
-  border: 1px solid black;
-`;
-
 export const Input = styled.input`
-  -webkit-transition: all 0.30s ease-in-out;
-  -moz-transition: all 0.30s ease-in-out;
-  -ms-transition: all 0.30s ease-in-out;
-  -o-transition: all 0.30s ease-in-out;
   outline: none;
   box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   width: 100%;
   background: #fff;
   margin-bottom: 4%;
   border: 1px solid #ccc;
   padding: 3%;
   color: #555;
-  font: 95% Arial, Helvetica, sans-serif;
+	font: 95% Arial, Helvetica, sans-serif;
+	transition: all 0.30s ease-in-out
 
 &:focus {
   box-shadow: 0 0 5px #2196f3;
@@ -129,34 +117,21 @@ export const Button = styled.button<IButtonProps>`
   color: #fff;
   transition: background-color 0.3s;
   width: 100px;
+  width: ${(props: IButtonProps) => (props.fullWidth ? '100%' : '100px')};
   height: 45px;
   font-size: 20px;
   text-transform: ${(props: IButtonProps) =>
     props.uppercase ? 'uppercase' : 'none'};
 
   &:hover {
-    background-color: #27ae60;
-    cursor:pointer;
+    background-color: ${(props: IButtonProps) => props.color ?? '#2ecc71'};
+    cursor: pointer;
   }
 
   &:disabled {
     background-color: #9ccdf5;
     cursor: not-allowed;
   }
-`;
-
-export const FormButton = styled(Button)`
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  width: 100%;
-  padding: 3%;
-  background: #2196f3;
-  /* border-bottom: 2px solid #2196f3; */
-  border-top-style: none;
-  border-right-style: none;
-  border-left-style: none;	
-  color: #fff;
 `;
 
 export const Theme: React.FC<IProps> = ({ children }) => (

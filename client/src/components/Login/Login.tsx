@@ -1,14 +1,19 @@
-import React, { useState } from 'react'
-//import './Login.css';
+import React, { useState } from 'react';
 import { Auth } from 'aws-amplify';
+import { Input, Button } from '../UI';
+import styled from 'styled-components';
 
-import { Input, FormButton, FormDiv } from '../UI';
+export const FormContainer = styled.div`
+  font: 95% Arial, Helvetica, sans-serif;
+  max-width: 400px;
+  margin: 5% auto;
+  padding: 40px;
+  border: 1px solid black;
+`;
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const validateForm = () => email.length > 0 && password.length > 0;
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -21,13 +26,15 @@ const Login: React.FC = () => {
   };
 
   return (
-    <FormDiv>
+    <FormContainer>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <Input onChange={e => setEmail(e.target.value)}
+        <Input
+          onChange={e => setEmail(e.target.value)}
           placeholder='Your Email'
-          value={email} 
-          name='email' />
+          value={email}
+          name='email'
+        />
         <Input
           type='password'
           name='password'
@@ -35,14 +42,17 @@ const Login: React.FC = () => {
           onChange={e => setPassword(e.target.value)}
           placeholder='Password'
         />
-        <FormButton 
-          disabled={!validateForm()} 
-          color="#2196f3" 
-          uppercase type='submit'>
-            Login
-        </FormButton>
+        <Button
+          fullWidth={true}
+          disabled={email.length === 0 || password.length === 0}
+          color='#2196f3'
+          uppercase={true}
+          type='submit'
+        >
+          Login
+        </Button>
       </form>
-    </FormDiv>
+    </FormContainer>
   );
 };
 
