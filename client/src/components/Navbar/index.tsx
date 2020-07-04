@@ -26,34 +26,35 @@ const AppTitle = styled(Link)`
 `;
 
 const MenuContainer = styled.ul`
-	display: inline-flex;
+  display: inline-flex;
 `;
 
-const MenuItem = styled.li`
+const MenuItem = styled(Link)`
   list-style: none;
   color: #fff;
-	cursor: pointer;
-	margin-left: 40px;
-	font-size: 20px;
+  cursor: pointer;
+  margin-left: 40px;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
 
-	&:hover {
-		color: red;
-	}
+  &:hover {
+    cursor: ponter;
+    color: red;
+  }
 `;
 
-const Navbar: React.FC = () => {
-  return (
-    <Nav>
-      <NavContainer>
-        <AppTitle to='/'>Trade In's</AppTitle>
+const Navbar: React.FC = () => (
+  <Nav>
+    <NavContainer>
+      <AppTitle to='/'>Trade In's</AppTitle>
 
-        <MenuContainer>
-          <MenuItem>Sign in</MenuItem>
-          <MenuItem>Sign up</MenuItem>
-        </MenuContainer>
-      </NavContainer>
-    </Nav>
-  );
-};
+      <MenuContainer>
+        <MenuItem to='login'>Sign in</MenuItem>
+        <MenuItem to='register'>Sign up</MenuItem>
+      </MenuContainer>
+    </NavContainer>
+  </Nav>
+);
 
 export default Navbar;

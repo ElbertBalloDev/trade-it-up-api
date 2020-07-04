@@ -21,7 +21,7 @@ Amplify.configure({
   API: {
     endpoints: [
       {
-        name: "bounties",
+        name: "tradeIns",
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },

@@ -26,7 +26,8 @@ interface IButtonProps {
 }
 
 export const Viewport = styled.div`
-  max-width: 1300px;
+	max-width: 1300px;
+	min-height: 800px;
   width: auto;
   height: auto;
   margin: 0 auto;
@@ -62,7 +63,7 @@ export const RowItem = styled.div`
   cursor: pointer;
   height: 300px;
   overflow: hidden;
-  position: relative; 
+  position: relative;
   cursor: pointer;
 
   &:hover {
