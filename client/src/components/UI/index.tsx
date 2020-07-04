@@ -21,10 +21,17 @@ interface IProps {
 }
 
 interface IButtonProps {
-	color?: string;
-	uppercase?: boolean;
-
+  color?: string;
+  uppercase?: boolean;
 }
+
+export const SlideUp = styled.div`
+  top: 100%;
+  position: relative;
+  transition: all 0.3s ease-out;
+  background: #428bca;
+	height: 100%;
+`;
 
 export const Viewport = styled.div`
   max-width: 1300px;
@@ -38,22 +45,30 @@ export const Viewport = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-director: row;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	padding: 15px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 15px;
 `;
 
 export const RowItem = styled.div`
   flex: 0 1 25%;
   padding: 10px;
-  height: 300px;
   border: 1px solid black;
-	margin: 10px;
-	
-	@media (max-width: 600px) {
-		flex: 1 1 30%;
-		height: 200px;
-	}
+  margin: 10px;
+	cursor: pointer;
+	height: 300px;
+  overflow: hidden;
+
+  &:hover {
+    ${SlideUp} {
+      top: 0;
+    }
+  }
+
+  @media (max-width: 600px) {
+    flex: 1 1 30%;
+    height: 200px;
+  }
 `;
 
 export const Column = styled.div`
@@ -75,15 +90,17 @@ export const Button = styled.button<IButtonProps>`
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
   background-color: ${(props: IButtonProps) => props.color ?? '#2ecc71'};
   color: #fff;
-	transition: background-color 0.3s;
-	width: 100px;
-	height: 45px;
-	font-size: 20px;
-	text-transform: ${(props: IButtonProps) => props.uppercase ? 'uppercase' : 'none'};
+  transition: background-color 0.3s;
+  width: 100px;
+  height: 45px;
+  font-size: 20px;
+  text-transform: ${(props: IButtonProps) =>
+    props.uppercase ? 'uppercase' : 'none'};
 
-	&:hover, &:focus {
-		background-color: #27ae60;
-	}
+  &:hover,
+  &:focus {
+    background-color: #27ae60;
+  }
 `;
 
 export const Theme: React.FC<IProps> = ({ children }) => (

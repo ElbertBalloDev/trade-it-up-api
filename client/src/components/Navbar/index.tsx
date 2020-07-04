@@ -14,7 +14,7 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 20px;
   list-style: none;
 `;
 
@@ -34,6 +34,7 @@ const MenuItem = styled.li`
   color: #fff;
 	cursor: pointer;
 	margin-left: 40px;
+	font-size: 20px;
 
 	&:hover {
 		color: red;
