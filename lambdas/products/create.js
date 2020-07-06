@@ -10,6 +10,7 @@ export const main = handler(async (event, context) => {
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
       productId: v4(),
+      title: data.title,
       description: data.description,
       attachment: data.attachment,
       createdAt: Date.now()

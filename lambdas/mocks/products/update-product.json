@@ -1,0 +1,11 @@
+{
+  "body": "{\"title\":\"Xbox\",\"description\":\"Updated Description\",\"attachment\":\"nintendo.jpg\"}",
+  "pathParameters": {
+    "id": "6aaea12d-dd17-4641-8655-7ef92e972184"
+  },
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "USER-SUB-1234"
+    }
+  }
+}

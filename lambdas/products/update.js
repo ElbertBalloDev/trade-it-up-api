@@ -10,9 +10,10 @@ export const main = handler(async (event, context) => {
       productId: event.pathParameters.id
     },
     UpdateExpression:
-      'SET description = :description, attachment = :attachment',
+      'SET description = :description, attachment = :attachment, title = :title',
     ExpressionAttributeValues: {
       ':attachment': data.attachment || null,
+      ':title': data.title || null,
       ':description': data.description || null
     },
     ReturnValues: 'ALL_NEW'

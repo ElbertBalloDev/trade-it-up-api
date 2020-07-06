@@ -13,6 +13,7 @@ const AddProduct: React.FC = () => {
     try {
       setLoading(true);
       const attachment = file ? await s3Upload(file) : null;
+      console.log(attachment)
       await API.post('tradeIns', '/product', {
         description,
         attachment
@@ -47,7 +48,6 @@ const AddProduct: React.FC = () => {
         <Input
           type='file'
           placeholder='Add an image'
-          value={description}
           name='Image'
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.target.files && e.target.files[0]) {
@@ -61,7 +61,7 @@ const AddProduct: React.FC = () => {
           <Button
             fullWidth={true}
             uppercase={true}
-            disabled={description.length === 0 && !file}
+            disabled={true}
             onClick={handleAdd}
           >
             Add

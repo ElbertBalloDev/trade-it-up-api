@@ -41,6 +41,14 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  delete:
+    handler: ./products/delete.main
+    events:
+      - http:
+          path: products/{id}
+          method: delete
+          cors: true
+          authorizer: aws_iam
   get:
     handler: ./products/get.main
     events:
@@ -61,7 +69,7 @@ functions:
     handler: ./products/update.main
     events:
       - http:
-          path: product/{id}
+          path: products/{id}
           method: put
           cors: true
           authorizer: aws_iam
@@ -73,3 +81,6 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+          
+resources:
+  - ${file(resources/api-gateway-errors.yml)}
