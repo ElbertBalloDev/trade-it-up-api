@@ -41,14 +41,6 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-  addMessage:
-    handler: ./messages/create.main
-    events:
-      - http:
-          path: messages
-          method: post
-          cors: true
-          authorizer: aws_iam
   get:
     handler: ./products/get.main
     events:
@@ -71,5 +63,13 @@ functions:
       - http:
           path: product/{id}
           method: put
+          cors: true
+          authorizer: aws_iam
+  addMessage:
+    handler: ./messages/create.main
+    events:
+      - http:
+          path: messages
+          method: post
           cors: true
           authorizer: aws_iam

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Column, Input, Button, FormContainer } from '../UI';
 import { API } from 'aws-amplify';
 import s3Upload from '../../libs/s3Upload';
-import styled from 'styled-components';
 
 const AddProduct: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
