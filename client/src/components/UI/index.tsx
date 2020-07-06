@@ -1,12 +1,23 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
-const theme = {
+interface ITheme {
   colors: {
-    powderWhite: '#FFFDF9',
-    persianGreen: '#06B49A',
-    lightBlue: '#AFDBD2',
-    onyx: '#36313D'
+    white: string;
+    blue: string;
+  };
+  fonts: Array<string>;
+  fontSizes: {
+    small: string;
+    medium: string;
+    large: string;
+  };
+}
+
+const theme: ITheme = {
+  colors: {
+    white: '#FFF',
+    blue: '#2196f3'
   },
   fonts: ['sans-serif', 'Roboto'],
   fontSizes: {
@@ -24,6 +35,7 @@ interface IButtonProps {
   color?: string;
   uppercase?: boolean;
   fullWidth?: boolean;
+  theme: ITheme;
 }
 
 export const Viewport = styled.div`
@@ -97,11 +109,11 @@ export const Input = styled.input`
 	font: 95% Arial, Helvetica, sans-serif;
 	transition: all 0.30s ease-in-out
 
-&:focus {
-  box-shadow: 0 0 5px #2196f3;
-  padding: 3%;
-  border: 1px solid #2196f3;
-}
+  &:focus {
+    box-shadow: 0 0 5px #2196f3;
+    padding: 3%;
+    border: 1px solid #2196f3;
+  }
 `;
 
 export const Button = styled.button<IButtonProps>`
@@ -113,18 +125,20 @@ export const Button = styled.button<IButtonProps>`
   outline: none;
   border-radius: 2px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-  background-color: ${(props: IButtonProps) => props.color ?? '#2ecc71'};
+  background-color: ${(props: IButtonProps) =>
+    props.color ?? props.theme.colors.blue};
   color: #fff;
   transition: background-color 0.3s;
   width: 100px;
   width: ${(props: IButtonProps) => (props.fullWidth ? '100%' : '100px')};
   height: 45px;
-  font-size: 20px;
+  font-size: 16px;
   text-transform: ${(props: IButtonProps) =>
     props.uppercase ? 'uppercase' : 'none'};
 
   &:hover {
-    background-color: ${(props: IButtonProps) => props.color ?? '#2ecc71'};
+    background-color: ${(props: IButtonProps) =>
+      props.color ?? props.theme.colors.blue};
     cursor: pointer;
   }
 
@@ -132,6 +146,14 @@ export const Button = styled.button<IButtonProps>`
     background-color: #9ccdf5;
     cursor: not-allowed;
   }
+`;
+
+export const FormContainer = styled.div`
+  font: 95% Arial, Helvetica, sans-serif;
+  max-width: 400px;
+  margin: 5% auto;
+  padding: 40px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 `;
 
 export const Theme: React.FC<IProps> = ({ children }) => (

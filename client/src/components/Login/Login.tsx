@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
-import { Input, Button } from '../UI';
-import styled from 'styled-components';
-
-export const FormContainer = styled.div`
-  font: 95% Arial, Helvetica, sans-serif;
-  max-width: 400px;
-  margin: 5% auto;
-  padding: 40px;
-  border: 1px solid black;
-`;
+import { Input, Button, FormContainer } from '../UI';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -30,7 +22,7 @@ const Login: React.FC = () => {
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <Input
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           placeholder='Your Email'
           value={email}
           name='email'
@@ -39,13 +31,12 @@ const Login: React.FC = () => {
           type='password'
           name='password'
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder='Password'
         />
         <Button
           fullWidth={true}
           disabled={email.length === 0 || password.length === 0}
-          color='#2196f3'
           uppercase={true}
           type='submit'
         >

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { AppContext } from '../../Context/Context';
 
 const Nav = styled.nav`
   padding: 10px 0;
@@ -34,7 +35,7 @@ const MenuItem = styled(Link)`
   color: #fff;
   cursor: pointer;
   margin-left: 40px;
-  font-size: 20px;
+  font-size: 16px;
   color: #fff;
   text-decoration: none;
 
@@ -44,17 +45,22 @@ const MenuItem = styled(Link)`
   }
 `;
 
-const Navbar: React.FC = () => (
-  <Nav>
-    <NavContainer>
-      <AppTitle to='/'>Trade In's</AppTitle>
-
-      <MenuContainer>
-        <MenuItem to='login'>Sign in</MenuItem>
-        <MenuItem to='register'>Sign up</MenuItem>
-      </MenuContainer>
-    </NavContainer>
-  </Nav>
-);
+const Navbar: React.FC = () => {
+  const { user } = useContext(AppContext);
+  
+  return (
+    <Nav>
+      <NavContainer>
+        <AppTitle to='/'>Trade In's</AppTitle>
+  
+        <MenuContainer>
+          <MenuItem to='/login'>Sign in</MenuItem>
+          <MenuItem to='/register'>Sign up</MenuItem>
+          <MenuItem to='/product/add'>Add Product</MenuItem>
+        </MenuContainer>
+      </NavContainer>
+    </Nav>
+  );
+}
 
 export default Navbar;

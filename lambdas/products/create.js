@@ -1,4 +1,4 @@
-import * as uuid from "uuid";
+import { v4 } from "uuid";
 import handler from "../libs/handler-lib";
 import dynamoDb from "../libs/dynamodb-lib";
 
@@ -9,7 +9,7 @@ export const main = handler(async (event, context) => {
 		TableName: process.env.productsTable,
 		Item: {
 			userId: event.requestContext.identity.cognitoIdentityId,
-			productId: uuid.v1(),
+			productId: v4(),
 			description: data.description,
 			attachment: data.attachment,
 			createdAt: Date.now(),
