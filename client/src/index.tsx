@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import Amplify from 'aws-amplify';
-import * as serviceWorker from './serviceWorker';
 import config from './config';
+import * as serviceWorker from './serviceWorker';
 
 Amplify.configure({
   Auth: {
