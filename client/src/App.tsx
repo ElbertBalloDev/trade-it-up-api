@@ -6,6 +6,7 @@ import { Navbar } from './components/Navbar';
 import { Dashboard } from './components/Dashboard';
 import { Login } from './components/Login';
 import { AddProduct } from './components/Products/';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -15,9 +16,9 @@ function App() {
           <Viewport>
             <Navbar />
             <Switch>
-              <Route path='/product/add' component={AddProduct} />
+              <ProtectedRoute path='/product/add' component={AddProduct} />
               <Route path='/Login' component={Login} />
-              <Route exact path='/' component={Dashboard} />
+              <ProtectedRoute exact path='/' component={Dashboard} />
             </Switch>
           </Viewport>
         </Router>
