@@ -5,13 +5,14 @@ import { Input, Button, FormContainer } from '../UI';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const history = useHistory();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       await Auth.signIn(email, password);
-      alert('Logged in');
+      history.push('/');
     } catch (e) {
       alert(e.message);
     }

@@ -45,22 +45,47 @@ const MenuItem = styled(Link)`
   }
 `;
 
+const Logout = styled.a`
+  list-style: none;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 40px;
+  font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+
+  &:hover {
+    cursor: ponter;
+    color: red;
+  }
+`;
+
 const Navbar: React.FC = () => {
-  const { user } = useContext(AppContext);
-  
+  const { user, logout } = useContext(AppContext);
+
   return (
     <Nav>
       <NavContainer>
         <AppTitle to='/'>Trade In's</AppTitle>
-  
+
         <MenuContainer>
-          <MenuItem to='/login'>Sign in</MenuItem>
-          <MenuItem to='/register'>Sign up</MenuItem>
-          <MenuItem to='/product/add'>Add Product</MenuItem>
+          {!user ? (
+            <>
+              <MenuItem to='/login'>Sign in</MenuItem>
+              <MenuItem to='/register'>Sign up</MenuItem>
+            </>
+          ) : (
+            <>
+              <MenuItem to='/product/add'>Add Product</MenuItem>
+              <Logout href='#' onClick={logout}>
+                Log out
+              </Logout>
+            </>
+          )}
         </MenuContainer>
       </NavContainer>
     </Nav>
   );
-}
+};
 
 export default Navbar;

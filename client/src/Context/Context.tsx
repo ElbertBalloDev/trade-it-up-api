@@ -1,23 +1,45 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { Auth } from 'aws-amplify';
 
 interface IAppContext {
   user: Object | null;
+  logout: () => void;
+}
+
+interface IUser {
+  token: string;
+  email: string;
 }
 
 export const AppContext = createContext<IAppContext>({
-  user: {}
+  user: {},
+  logout: () => undefined
 });
 
 export default ({ children }: { children: React.ReactNode }) => {
-  // create user type
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
-    // get user from cognito
+    const checkAuth = async () => {
+      try {
+        const session = await Auth.currentSession();
+        const token = session.getIdToken();
+        setUser({ token: token.getJwtToken(), email: token.payload.email });
+      } catch (err) {
+        setUser(null);
+      }
+    };
+    checkAuth();
   }, []);
 
+  const logout = () => {
+    Auth.signOut();
+    setUser(null);
+  };
+
   const context: IAppContext = {
-    user
+    user,
+    logout
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

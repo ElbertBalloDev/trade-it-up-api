@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 interface ITheme {
   colors: {
@@ -45,7 +45,8 @@ export const Viewport = styled.div`
   height: auto;
   margin: 0 auto;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  border-radius: 0.25rem;
+	border-radius: 0.25rem;
+	background: #fff;
 `;
 
 export const Row = styled.div`
@@ -156,6 +157,15 @@ export const FormContainer = styled.div`
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 `;
 
+const GlobalStyle = createGlobalStyle`
+	body {
+		background: #9BB5B0;
+	}
+`;
+
 export const Theme: React.FC<IProps> = ({ children }) => (
-  <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  <ThemeProvider theme={theme}>
+    <GlobalStyle />
+    {children}
+  </ThemeProvider>
 );
