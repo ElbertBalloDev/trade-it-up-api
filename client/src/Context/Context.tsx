@@ -3,6 +3,7 @@ import { Auth } from 'aws-amplify';
 
 interface IAppContext {
   user: Object | null;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -13,6 +14,7 @@ interface IUser {
 
 export const AppContext = createContext<IAppContext>({
   user: {},
+  login: async () => undefined,
   logout: () => undefined
 });
 
@@ -32,6 +34,12 @@ export default ({ children }: { children: React.ReactNode }) => {
     checkAuth();
   }, []);
 
+  const login = async (email: string, password: string): Promise<void> => {
+    const auth = await Auth.signIn(email, password);
+    const token = auth.signInUserSession.getIdToken();
+    setUser({ token: token.getJwtToken(), email: token.payload.email });
+  };
+
   const logout = () => {
     Auth.signOut();
     setUser(null);
@@ -39,8 +47,9 @@ export default ({ children }: { children: React.ReactNode }) => {
 
   const context: IAppContext = {
     user,
+    login,
     logout
   };
-
+  
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 };
