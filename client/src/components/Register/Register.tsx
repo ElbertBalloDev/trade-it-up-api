@@ -39,9 +39,6 @@ const Register = () => {
 		}
 	};
 
-	const validForm = () => email.length === 0 || password.length === 0 || confirmPassword.length === 0;
-	const validConfirmationForm = () => confirmationCode.length !== 0;
-
 	const renderForm = () => {
 		return (
 			<FormContainer>
@@ -68,7 +65,12 @@ const Register = () => {
 						onChange={e => setConfirmPassword(e.target.value)}
 						placeholder="Confirm Password"
 					/>
-					<Button fullWidth={true} disabled={validForm()} uppercase={true} type="submit">
+					<Button
+						fullWidth={true}
+						disabled={email.length === 0 || password.length === 0 || confirmPassword.length === 0}
+						uppercase={true}
+						type="submit"
+					>
 						Register
 					</Button>
 				</form>
@@ -88,7 +90,7 @@ const Register = () => {
 						name="confirmationCode"
 						type="text"
 					/>
-					<Button fullWidth={true} disabled={validConfirmationForm()} uppercase={true} type="submit">
+					<Button fullWidth={true} disabled={confirmationCode.length !== 0} uppercase={true} type="submit">
 						Register
 					</Button>
 				</form>
