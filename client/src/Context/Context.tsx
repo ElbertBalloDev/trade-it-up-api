@@ -5,6 +5,7 @@ interface IAppContext {
   user: Object | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  register: (email: string, password: string) => Promise<void>;
 }
 
 interface IUser {
@@ -15,7 +16,8 @@ interface IUser {
 export const AppContext = createContext<IAppContext>({
   user: {},
   login: async () => undefined,
-  logout: () => undefined
+  logout: () => undefined,
+  register: async () => undefined,
 });
 
 export default ({ children }: { children: React.ReactNode }) => {
@@ -40,6 +42,11 @@ export default ({ children }: { children: React.ReactNode }) => {
     setUser({ token: token.getJwtToken(), email: token.payload.email });
   };
 
+  const register = async (email: string, password: string): Promise<void> => {
+    const auth = await Auth.signUp(email, password);
+
+  };
+
   const logout = () => {
     Auth.signOut();
     setUser(null);
@@ -48,7 +55,8 @@ export default ({ children }: { children: React.ReactNode }) => {
   const context: IAppContext = {
     user,
     login,
-    logout
+    logout, 
+    register
   };
   
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

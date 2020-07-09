@@ -61,7 +61,7 @@ const AddProduct: React.FC = () => {
           <Button
             fullWidth={true}
             uppercase={true}
-            disabled={true}
+            disabled={description.length === 0}
             onClick={handleAdd}
           >
             Add

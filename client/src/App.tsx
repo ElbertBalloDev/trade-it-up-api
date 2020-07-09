@@ -6,6 +6,7 @@ import { Navbar } from './components/Navbar';
 import { Dashboard } from './components/Dashboard';
 import { Login } from './components/Login';
 import { AddProduct } from './components/Products/';
+import { Register } from './components/Register/';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Switch>
               <Route path='/product/add' component={AddProduct} />
               <Route path='/Login' component={Login} />
+              <Route path='/Register' component={Register} />
               <Route exact path='/' component={Dashboard} />
             </Switch>
           </Viewport>
