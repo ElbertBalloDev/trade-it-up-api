@@ -1,27 +1,47 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
 
-interface IAppContext {
-  user: Object | null;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
-  register: (email: string, password: string) => Promise<void>;
-}
-
 interface IUser {
   token: string;
   email: string;
 }
 
+export interface INewUser {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  confirmationCode: string;
+}
+
+interface IAppContext {
+  user: Object | null;
+  newUser: INewUser;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
+  register: (newUser: INewUser) => Promise<void>;
+}
+
 export const AppContext = createContext<IAppContext>({
   user: {},
+  newUser: {
+    email: '',
+    password: '',
+    confirmPassword: '',
+    confirmationCode: ''
+  },
   login: async () => undefined,
   logout: () => undefined,
-  register: async () => undefined,
+  register: async () => undefined
 });
 
 export default ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
+  const [newUser, setNewUser] = useState<INewUser>({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    confirmationCode: ''
+  });
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -42,9 +62,9 @@ export default ({ children }: { children: React.ReactNode }) => {
     setUser({ token: token.getJwtToken(), email: token.payload.email });
   };
 
-  const register = async (email: string, password: string): Promise<void> => {
-    const auth = await Auth.signUp(email, password);
-
+  const register = async (newUser: INewUser): Promise<void> => {
+    await Auth.signUp(newUser.email, newUser.password);
+    setNewUser(newUser);
   };
 
   const logout = () => {
@@ -55,9 +75,10 @@ export default ({ children }: { children: React.ReactNode }) => {
   const context: IAppContext = {
     user,
     login,
-    logout, 
-    register
+    logout,
+    register,
+    newUser
   };
-  
+
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 };
