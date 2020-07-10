@@ -10,38 +10,25 @@ export interface INewUser {
   email: string;
   password: string;
   confirmPassword: string;
-  confirmationCode: string;
+  isConfirmed: boolean;
 }
 
 interface IAppContext {
   user: Object | null;
-  newUser: INewUser;
+
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  register: (newUser: INewUser) => Promise<void>;
 }
 
 export const AppContext = createContext<IAppContext>({
   user: {},
-  newUser: {
-    email: '',
-    password: '',
-    confirmPassword: '',
-    confirmationCode: ''
-  },
+
   login: async () => undefined,
-  logout: () => undefined,
-  register: async () => undefined
+  logout: () => undefined
 });
 
 export default ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
-  const [newUser, setNewUser] = useState<INewUser>({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    confirmationCode: ''
-  });
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -62,11 +49,6 @@ export default ({ children }: { children: React.ReactNode }) => {
     setUser({ token: token.getJwtToken(), email: token.payload.email });
   };
 
-  const register = async (newUser: INewUser): Promise<void> => {
-    await Auth.signUp(newUser.email, newUser.password);
-    setNewUser(newUser);
-  };
-
   const logout = () => {
     Auth.signOut();
     setUser(null);
@@ -75,9 +57,7 @@ export default ({ children }: { children: React.ReactNode }) => {
   const context: IAppContext = {
     user,
     login,
-    logout,
-    register,
-    newUser
+    logout
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

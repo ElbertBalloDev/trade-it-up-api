@@ -2,17 +2,21 @@ import React, { useState, useContext } from 'react';
 import { Input, Button, FormContainer } from '../UI';
 import { Confirmation } from '.';
 import { AppContext, INewUser } from '../../Context/Context';
+import { Auth } from 'aws-amplify';
 
 const Register = () => {
-  const { newUser, register, login } = useContext(AppContext);
-  const [user, setUser] = useState<INewUser>(newUser);
+  const { login } = useContext(AppContext);
+  const [newUser, setNewUser] = useState<INewUser>({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    isConfirmed: true
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUser((prevState) => {
-      return {
-        ...prevState,
-        [e.target.name]: e.target.value
-      };
+    setNewUser({
+      ...newUser,
+      [e.target.name]: e.target.value
     });
   };
 
@@ -20,12 +24,15 @@ const Register = () => {
     event.preventDefault();
     try {
       if (
-        user &&
-        user.password.length > 0 &&
-        user.confirmPassword.length > 0 &&
-        user.password === user.confirmPassword
+        newUser.password.length > 0 &&
+        newUser.confirmPassword.length > 0 &&
+        newUser.password === newUser.confirmPassword
       ) {
-        await register(user);
+        await Auth.signUp(newUser.email, newUser.password);
+        setNewUser({
+          ...newUser,
+          isConfirmed: false
+        });
       } else {
         alert(`passwords doesnt match`);
       }
@@ -36,8 +43,8 @@ const Register = () => {
 
   return (
     <>
-      {user.confirmationCode.length > 0 ? (
-        <Confirmation newUser={user} login={login} />
+      {!newUser.isConfirmed ? (
+        <Confirmation newUser={newUser} login={login} />
       ) : (
         <FormContainer>
           <h1>Register</h1>
@@ -45,30 +52,30 @@ const Register = () => {
             <Input
               onChange={handleChange}
               placeholder='Your Email'
-              value={user.email}
+              value={newUser.email}
               name='email'
               type='email'
             />
             <Input
               type='password'
               name='password'
-              value={user.password}
+              value={newUser.password}
               onChange={handleChange}
               placeholder='Password'
             />
             <Input
               type='password'
               name='confirmPassword'
-              value={user.confirmPassword}
+              value={newUser.confirmPassword}
               onChange={handleChange}
               placeholder='Confirm Password'
             />
             <Button
               fullWidth={true}
               disabled={
-                user.email.length === 0 ||
-                user.password.length === 0 ||
-                user.confirmPassword.length === 0
+                newUser.email.length === 0 ||
+                newUser.password.length === 0 ||
+                newUser.confirmPassword.length === 0
               }
               uppercase={true}
               type='submit'

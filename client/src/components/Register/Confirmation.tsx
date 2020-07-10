@@ -37,7 +37,7 @@ const Confirmation: React.FC<IProps> = ({ newUser, login }) => {
         />
         <Button
           fullWidth={true}
-          disabled={confirmationCode.length !== 0}
+          disabled={confirmationCode.length === 0}
           uppercase={true}
           type='submit'
         >
