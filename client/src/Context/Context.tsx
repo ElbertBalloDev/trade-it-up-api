@@ -15,14 +15,12 @@ export interface INewUser {
 
 interface IAppContext {
   user: Object | null;
-
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
 export const AppContext = createContext<IAppContext>({
   user: {},
-
   login: async () => undefined,
   logout: () => undefined
 });
