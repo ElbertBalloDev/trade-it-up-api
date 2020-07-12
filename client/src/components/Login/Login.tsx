@@ -9,7 +9,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const history = useHistory();
-  const { login } = useContext(AppContext);
+  const { login, addToast } = useContext(AppContext);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -17,6 +17,7 @@ const Login: React.FC = () => {
 
     try {
       await login(email, password);
+      addToast({ type: 'success', message: 'Logged In' });
       history.push('/');
     } catch (e) {
       setLoading(false);
