@@ -17,8 +17,8 @@ const Login: React.FC = () => {
 
     try {
       await login(email, password);
-      addToast({ type: 'success', message: 'Logged In' });
       history.push('/');
+      addToast('success', 'Logged In');
     } catch (e) {
       setLoading(false);
       alert(e.message);

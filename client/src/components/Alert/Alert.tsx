@@ -1,14 +1,19 @@
 import React from 'react';
 import { IAlert } from '../../Context/Context';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 interface IProps {
   alert: IAlert;
+  removeMessage: (id: string) => void;
 }
 
 interface IToastProps {
   type: string;
 }
+
+const SlideIn = keyframes`
+
+`;
 
 const Toast = styled.div<IToastProps>`
   position: fixed;
@@ -26,7 +31,7 @@ const Toast = styled.div<IToastProps>`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   background: ${(props: IToastProps) =>
     props.type === 'success' ? 'green' : 'red'};
-  transition: transform 0.5s;
+  transition: all 0.5s ease-in;
 `;
 
 // need more styling
@@ -35,10 +40,10 @@ const CloseButton = styled.div`
   cursor: pointer;
 `;
 
-const Alert: React.FC<IProps> = ({ alert }) => {
+const Alert: React.FC<IProps> = ({ alert, removeMessage }) => {
   return (
     <Toast type={alert.type}>
-      <CloseButton>x</CloseButton>
+      <CloseButton onClick={() => removeMessage(alert.id)}>x</CloseButton>
       {alert.message}
     </Toast>
   );

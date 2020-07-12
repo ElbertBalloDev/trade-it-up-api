@@ -1,14 +1,18 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
 import { Alert } from '../components/Alert';
+import { v4 } from 'uuid';
 
 interface IUser {
   token: string;
   email: string;
 }
 
+type AlertType = 'success' | 'error';
+
 export interface IAlert {
-  type: 'success' | 'error';
+  id: string;
+  type: AlertType;
   message: string;
 }
 
@@ -23,7 +27,7 @@ interface IAppContext {
   user: Object | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  addToast: (alert: IAlert) => void;
+  addToast: (type: AlertType, message: string) => void;
 }
 
 export const AppContext = createContext<IAppContext>({
@@ -66,9 +70,19 @@ export default ({ children }: { children: React.ReactNode }) => {
     setUser(null);
   };
 
-  const addToast = (alert: IAlert) => setAlerts([...alerts, alert]);
+  const addToast = (type: AlertType, message: string) => {
+    const newMessage: IAlert = {
+      id: v4(),
+      type,
+      message
+    };
+    setAlerts([...alerts, newMessage]);
+  };
 
-  const removeMessage = (index: number) => {};
+  const removeMessage = (id: string) => {
+    const currentAlerts = alerts.slice();
+    setAlerts(currentAlerts.filter((alert) => alert.id !== id));
+  };
 
   const context: IAppContext = {
     user,
@@ -79,12 +93,10 @@ export default ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AppContext.Provider value={context}>
-      <>
-        {alerts.map((alert: IAlert, index: number) => (
-          <Alert key={index} alert={alert} />
-        ))}
-        {children}
-      </>
+      {alerts.map((alert: IAlert) => (
+        <Alert key={alert.id} alert={alert} removeMessage={removeMessage} />
+      ))}
+      {children}
     </AppContext.Provider>
   );
 };
