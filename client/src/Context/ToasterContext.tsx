@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 interface IAlert {
   type: 'success' | 'error';
@@ -16,6 +16,11 @@ export const ToasterContext = createContext<IToasterContext>({
 export default ({ children }: { children: React.ReactNode }) => {
   const [alerts, setAlerts] = useState<Array<IAlert>>([]);
   const addAlert = (alert: IAlert) => setAlerts([...alerts, alert]);
+
+  useEffect(() => {
+    setTimeout(() => setAlerts([]), 5000);
+    return () => clearTimeout();
+  }, [alerts]);
 
   const context: IToasterContext = {
     addAlert
