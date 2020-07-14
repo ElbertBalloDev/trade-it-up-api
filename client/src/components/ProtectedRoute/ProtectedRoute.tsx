@@ -14,6 +14,7 @@ const ProtectedRoute: React.FC<IProps> = ({
   exact = false
 }: IProps) => {
   const { user } = useContext(AppContext);
+  console.log('user', user);
   return (
     <Route
       path={path}
