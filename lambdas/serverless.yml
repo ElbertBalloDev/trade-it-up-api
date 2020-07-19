@@ -1,28 +1,43 @@
-# NOTE: update this with your service name
-service: trade-it-up-api
+service:
+  name: trade-it-up-api
 
-# Create an optimized package for our functions
-package:
-  individually: true
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+  serverless-iam-roles-per-function:
+    defaultInherit: true # Each function will inherit the service level roles too.
+  globalTables:
+    regions: # list of regions in which you want to set up global tables
+      - us-east-1 # Ohio (default region to date for stack)
+    createStack: true
 
 plugins:
-  - serverless-bundle # Package our functions with Webpack
   - serverless-offline
-  - serverless-dotenv-plugin # Load .env as environment variables
+  - serverless-webpack
+  - serverless-dotenv-plugin
 
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: prod
-  region: us-east-1
-
+  frameworkVersion: ‘1.64.1’
+  stage: ${opt:stage, 'local'}
+  region: ${opt:region, 'us-east-1'}
+  apiGateway:
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
   environment:
+    DEBUG: "*"
+    NODE_ENV: ${self:provider.stage}
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     productsTable: products
     messageTable: messages
-
+  tracing:
+    lambda: true
   iamRoleStatements:
     - Effect: Allow
       Action:
+        - xray:PutTraceSegments
+        - xray:PutTelemetryRecords
         - dynamodb:DescribeTable
         - dynamodb:Query
         - dynamodb:Scan
@@ -31,10 +46,22 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:us-east-1:*:*"
-      
+
 functions:
+  # hello:
+  #   handler: src/libs/handler.hello
+  #   events:
+  #     - http:
+  #         method: get
+  #         path: hello
+  getMessage:
+    handler: src/message/get.main
+    events:
+      - http:
+          method: get
+          path: message
   create:
-    handler: ./products/create.main
+    handler: src/products/create.main
     events:
       - http:
           path: products
@@ -42,15 +69,15 @@ functions:
           cors: true
           authorizer: aws_iam
   delete:
-    handler: ./products/delete.main
+    handler: src/products/delete.main
     events:
       - http:
           path: products/{id}
           method: delete
           cors: true
-          authorizer: aws_iam
+          # authorizer: aws_iam
   get:
-    handler: ./products/get.main
+    handler: src/products/get.main
     events:
       - http:
           path: products/{id}
@@ -58,7 +85,7 @@ functions:
           cors: true
           authorizer: aws_iam
   list:
-    handler: ./products/list.main
+    handler: src/products/list.main
     events:
       - http:
           path: products
@@ -66,7 +93,7 @@ functions:
           cors: true
           authorizer: aws_iam
   update:
-    handler: ./products/update.main
+    handler: src/products/update.main
     events:
       - http:
           path: products/{id}
@@ -74,13 +101,13 @@ functions:
           cors: true
           authorizer: aws_iam
   addMessage:
-    handler: ./messages/create.main
+    handler: src/message/create.main
     events:
       - http:
           path: messages
           method: post
           cors: true
           authorizer: aws_iam
-          
+
 resources:
-  - ${file(resources/api-gateway-errors.yml)}
+  - ${file(src/resources/api-gateway-errors.yml)}
