@@ -14,11 +14,11 @@
     "baseUrl": "./",
     "paths": {
       "@src/*": ["src/*"],
-      "@queries/*": ["queries/*"],
       "@tests/*": ["tests/*"]
-    }
+    },
+    "typeRoots": ["@types", "node_modules/@types"]
   },
-  "include": ["./**/*.ts"],
+  "include": ["./**/*.ts", "./src"],
   "exclude": [
     "node_modules/**/*",
     ".serverless/**/*",
