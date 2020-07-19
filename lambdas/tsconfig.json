@@ -15,10 +15,9 @@
     "paths": {
       "@src/*": ["src/*"],
       "@tests/*": ["tests/*"]
-    },
-    "typeRoots": ["@types", "node_modules/@types"]
+    }
   },
-  "include": ["./**/*.ts", "./src"],
+  "include": ["./**/*.ts"],
   "exclude": [
     "node_modules/**/*",
     ".serverless/**/*",
